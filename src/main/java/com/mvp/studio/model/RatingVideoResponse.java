@@ -1,8 +1,8 @@
 package com.mvp.studio.model;
 
-public class AddVideoResponse {
+public class RatingVideoResponse {
 
-   private Video video;
+    private Video video;
 
     public Video getVideo() {
         return video;
@@ -14,7 +14,7 @@ public class AddVideoResponse {
 
     @Override
     public String toString() {
-        return "AddVideoResponse{" +
+        return "RatingVideoResponse{" +
                 "video=" + video +
                 '}';
     }

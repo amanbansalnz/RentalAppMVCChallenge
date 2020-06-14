@@ -1,6 +1,6 @@
 package com.mvp.studio.model;
 
-public class AddVideoRequest {
+public class ReturnVideoRequest {
 
     private String movieTitle;
 

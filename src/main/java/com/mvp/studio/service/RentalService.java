@@ -30,13 +30,6 @@ public class RentalService {
       Think in terms of services being focused on a single responsibility.
      */
 
-//    Map<String, Video> videos = new HashMap<String, Video>();
-//
-//    public void addVideo(String videoName) {
-//        Video video = new Video(videoName);
-//        videos.put(videoName, video);
-//    }
-
     public boolean checkOut(String videoName) {
         //retrieve the video map from the Video service now
         Map<String, Video> videos = videoService.getVideoMap();
@@ -46,6 +39,8 @@ public class RentalService {
             Video video = videos.get(videoName);
             if (!video.isCheckedOut()) {
                 video.setCheckedOut(true);
+                //we want to save the new video state to save into the DB
+                videoService.updateVideo(video);
                 isCheckedOut = true;
             }
         }
@@ -60,6 +55,9 @@ public class RentalService {
             Video video = videos.get(videoName);
             if (video.isCheckedOut()) {
                 video.setCheckedOut(false);
+
+                //we want to save the new video state to save into the DB
+                videoService.updateVideo(video);
                 isReturned = true;
             }
         }
@@ -74,16 +72,19 @@ public class RentalService {
         }
     }
 
-    public String listInventory() {
-        Map<String, Video> videos = videoService.getVideoMap();
-        //Important to know the difference between String StringBuilder and StringBuffer
-        StringBuilder builder = new StringBuilder("\n-------------------------------------- List Of Videos To Checkout ------------------------------------- \n");
-
-        for (Map.Entry<String, Video> entry : videos.entrySet()) {
-            Video video = entry.getValue();
-            builder.append(video.toString());
-        }
-        return builder.toString();
-    }
+    /**
+     * We do not need this now as the GET video resource fetches all the videos which shows you what video's are available to return or return
+     */
+//    public String listInventory() {
+//        Map<String, Video> videos = videoService.getVideoMap();
+//        //Important to know the difference between String StringBuilder and StringBuffer
+//        StringBuilder builder = new StringBuilder("\n-------------------------------------- List Of Videos To Checkout ------------------------------------- \n");
+//
+//        for (Map.Entry<String, Video> entry : videos.entrySet()) {
+//            Video video = entry.getValue();
+//            builder.append(video.toString());
+//        }
+//        return builder.toString();
+//    }
 
 }

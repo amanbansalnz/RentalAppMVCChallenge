@@ -5,6 +5,8 @@ import com.mvp.studio.model.AddVideoResponse;
 import com.mvp.studio.model.Video;
 import com.mvp.studio.model.VideoResponse;
 import com.mvp.studio.service.VideoService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -19,6 +21,8 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/v1/video")
 public class VideoController {
 
+    private static final Logger LOGGER = LoggerFactory.getLogger(VideoController.class);
+
     @Autowired
     private VideoService videoService;
 
@@ -29,13 +33,16 @@ public class VideoController {
         return videoResponse;
     }
 
-
     @PostMapping(value = "/add", produces = MediaType.APPLICATION_JSON_VALUE, consumes =  MediaType.APPLICATION_JSON_VALUE )
     @ResponseStatus(HttpStatus.CREATED) // return response code 201
     public AddVideoResponse addVideo(@RequestBody AddVideoRequest addVideoRequest) {
+
         Video video = videoService.addVideo(addVideoRequest.getMovieTitle());
+
+        LOGGER.info("Adding video request >>> {}", addVideoRequest);
         AddVideoResponse addVideoResponse = new AddVideoResponse();
         addVideoResponse.setVideo(video);
+        LOGGER.info("Added video  response <<< {}", addVideoResponse);
         return addVideoResponse;
     }
 }

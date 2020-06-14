@@ -48,27 +48,22 @@ public class VideoService {
         return video;
     }
 
+    //new method that will save the new changes to the video object back into the DB
+    public Video updateVideo(Video video) {
+        videoRepository.save(video);
+        return video;
+    }
+
+
     //Note here we have copied this code from the previous video
     //rental project where we are adding predefined movies.
     private void addInitialVideos() {
-
-
         List<Video> videos = videoRepository.findAll();
 
         //adding the the list of videos to a map.
         videoMap = videos.stream()
                 .collect(Collectors.toMap(Video::getMovieTitle, video -> video));
 
-//        addVideo("The Matrix");
-//        addVideo("Godfather II");
-//        addVideo("Star Wars Episode IV: A New Hope");
-//        addVideo("ET");
-//        addVideo("War");
-//        addVideo("The Meg");
-//        addVideo("Star Trooper");
-//        addVideo("Avengers");
-//        addVideo("X-Men");
-//        addVideo("I am Java");
     }
 
     //getter and setter
